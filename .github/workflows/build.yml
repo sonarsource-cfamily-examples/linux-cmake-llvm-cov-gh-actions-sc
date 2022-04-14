@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Install LLVM and Clang
+      - name: Install Clang and LLVM (including llvm-cov)
         uses: KyleMayes/install-llvm-action@v1
         with:
           version: "13.0"
