@@ -48,10 +48,25 @@ jobs:
           mkdir build
           cmake -S . -B build
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
+      - name: Run tests to generate coverage information
+        run: |
+          ./build/coverage_test1
+          mv default.profraw test1.profraw
+          ./build/coverage_test2
+          mv default.profraw test2.profraw
+      - name: Merge counters from different runs and morf them into llvm-cov-compatible form
+        run: |
+          llvm-profdata merge -o merged.profdata *.profraw
+      - name: Collect the coverage
+        run: |
+          llvm-cov show --instr-profile merged.profdata build/coverage_test1 -object build/coverage_test2 > coverage.txt
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          sonar-scanner --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+          sonar-scanner \
+            --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" \
+            --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
+            --define sonar.cfamily.llvm-cov.reportPath=coverage.txt
 
