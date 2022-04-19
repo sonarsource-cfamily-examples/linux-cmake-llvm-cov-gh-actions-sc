@@ -24,7 +24,7 @@ It is very easy to analyze a C, C++ and Objective-C project with SonarCloud with
 .. Run the tests to generate the test coverage information
 * After each test run, "default.profraw" file will be generated. Make sure to move it someplace, to avoid overwriting with another test run.
 .. Merge the coverage information from all test runs and convert the result into a format compatible with llvm-cov using `llvm-profdata merge`
-.. Run `llvm-cov show` and feed it all the test files (or all object files you are interested in).
+.. Run `llvm-cov show` on all the test executable files (or all object files you are interested in).
 * Save the output (the source files annotated with coverage counters) into a file
 .. Run `sonar-scanner` as the final step with `sonar.cfamily.llvm-cov.reportPath` pointing to the file with coverage report
 . Make sure that you have your token stored as a secret in your repository (`SONAR_TOKEN`). You can request new tokens using https://sonarcloud.io/account/security/[Account/Security page].
