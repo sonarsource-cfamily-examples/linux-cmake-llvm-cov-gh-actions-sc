@@ -58,7 +58,7 @@ jobs:
           mv default.profraw test1.profraw
           ./build/coverage_test2
           mv default.profraw test2.profraw
-      - name: Merge counters from different runs and morf them into llvm-cov-compatible form
+      - name: Merge counters from different runs and convert the result into an llvm-cov-compatible form
         run: |
           llvm-profdata merge -o merged.profdata *.profraw
       - name: Collect the coverage
