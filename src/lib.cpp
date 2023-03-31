@@ -2,6 +2,7 @@
 int myfun(bool b, int (*callback)(int)) {
   int num = -1;
 
+  // SHOW ME COVERAGE!!!
   if (b) {
     num = callback(callback(num));
   } else {
