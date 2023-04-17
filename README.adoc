@@ -8,7 +8,9 @@
 image:{img-build-status}[Build Status, link={uri-build-status}]
 image:{img-qg-status}[Quality Gate Status,link={uri-qg-status}]
 
-*The test coverage shown here works on both SonarQube and SonarCloud. This project is analysed on https://sonarcloud.io/dashboard?id=sonarsource-cfamily-examples_linux-cmake-llvm-cov-gh-actions-sc[SonarCloud]!*
+*The test coverage shown here works on both SonarQube and SonarCloud.
+In SonarQube import of branch coverage information from llvm-cov report is available only starting from SonarQube version `10.0`.
+This project is analysed on https://sonarcloud.io/dashboard?id=sonarsource-cfamily-examples_linux-cmake-llvm-cov-gh-actions-sc[SonarCloud]!*
 
 :note-caption: :information_source:
 NOTE: This simple example aims at demonstrating code coverage in action. It explains how to add coverage on a project for which the analysis is already configured. Analysis configuration examples are available <<code-description,here>>. +
