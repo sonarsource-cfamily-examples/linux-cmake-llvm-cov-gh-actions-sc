@@ -37,7 +37,7 @@ jobs:
           llvm-profdata merge -o merged.profdata *.profraw
       - name: Collect the coverage
         run: |
-          llvm-cov show --instr-profile merged.profdata build/coverage_test1 -object build/coverage_test2 > coverage.txt
+          llvm-cov show --show-branches=count --instr-profile merged.profdata build/coverage_test1 -object build/coverage_test2 > coverage.txt
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
