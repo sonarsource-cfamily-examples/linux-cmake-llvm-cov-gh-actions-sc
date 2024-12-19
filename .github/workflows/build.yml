@@ -19,9 +19,9 @@ jobs:
         uses: KyleMayes/install-llvm-action@v1.6.1
         with:
           version: "15.0.6"
-      - name: Install sonar-scanner and build-wrapper
-        uses: sonarsource/sonarcloud-github-c-cpp@v3
-      - name: Run build-wrapper
+      - name: Install Build Wrapper
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v4
+      - name: Run Build Wrapper
         run: |
           mkdir build
           cmake -S . -B build
@@ -38,11 +38,11 @@ jobs:
       - name: Collect the coverage
         run: |
           llvm-cov show --show-branches=count --instr-profile merged.profdata build/coverage_test1 -object build/coverage_test2 > coverage.txt
-      - name: Run sonar-scanner
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }} # Put the name of your token here
-        run: |
-          sonar-scanner \
-            --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json" \
+        with:
+          args: >
+            --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
             --define sonar.cfamily.llvm-cov.reportPath=coverage.txt
